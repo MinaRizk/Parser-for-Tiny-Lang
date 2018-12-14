@@ -1,0 +1,32 @@
+read,Reserved Word
+x,identifier
+;,Symbol
+if,Reserved Word
+0,number
+<,Symbol
+x,identifier
+then,Reserved Word
+fact,identifier
+:=,assign
+1,number
+;,Symbol
+repeat,Reserved Word
+fact,identifier
+:=,assign
+fact,identifier
+*,Symbol
+x,identifier
+;,Symbol
+x,identifier
+:=,assign
+x,identifier
+-,Symbol
+1,number
+until,Reserved Word
+x,identifier
+=,Symbol
+0,number
+;,Symbol
+write,Reserved Word
+fact,identifier
+end,Reserved Word
