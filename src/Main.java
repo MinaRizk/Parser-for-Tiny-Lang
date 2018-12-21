@@ -1,5 +1,7 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
 import java.util.ArrayList;
 import java.util.ListIterator;
 
@@ -58,20 +60,24 @@ public class Main
         /*else
             parentNodeNo=currentNodeNo-1;*/
         int numberOfChilds=0;
-        ratio=ratio-50;
-        if(ratio<1)
-            ratio=100;
+        ratio=ratio-70;
+        if(ratio<50)
+            ratio=200;
         while (listIterator.hasNext())
         {
             numberOfChilds++;
             if (isHorizontal==false)
-                drawTree(listIterator.next(),frame,(xlevel-2*ratio)+ratio*numberOfChilds,ylevel+100,parentNodeNo,ratio);
+                drawTree(listIterator.next(),frame,(xlevel-2*ratio)+ratio*numberOfChilds+15,ylevel+90,parentNodeNo,ratio);
             else
             {
                 int lastParentIndex=listOfParents.get(desiredListNo).size()-1;
                 parentNodeNo=listOfParents.get(desiredListNo).get(lastParentIndex);
                 listOfParents.get(desiredListNo).add(currentNodeNo+1);
-                drawTree(listIterator.next(),frame,(xlevel-2*ratio)+ratio*numberOfChilds,ylevel,parentNodeNo,ratio);
+                int xl = (xlevel-2*ratio)+ratio*numberOfChilds;
+
+                drawTree(listIterator.next(),frame,xl,ylevel+130,parentNodeNo,ratio);
+
+                System.out.println(xl);
                 //parentNodeNo=currentNodeNo;
             }
         }
@@ -247,22 +253,38 @@ public class Main
 
         jp.setPreferredSize(new Dimension(500,500));
 
-        JScrollPane pane=new JScrollPane(jp,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
-        pane.setPreferredSize(jp.getPreferredSize());
-        frame.add(pane);
+        //    JScrollPane scrollPane=new JScrollPane(jp,JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+        //JScrollPane vertical = new JScrollPane();
+/*        vertical.setValue( vertical.getMaximum() );
+        //pane.setPreferredSize(jp.getPreferredSize());
+        pane.setPreferredSize(new Dimension(450, 110));
+        frame.add(pane);*/
         //Add JScrollPane into JFrame
         //frame.add(scrollBar);
 
+/*        JScrollBar hbar=new JScrollBar(JScrollBar.HORIZONTAL, 30, 20, 0, 500);
+        JScrollBar vbar=new JScrollBar(JScrollBar.VERTICAL, 30, 40, 0, 500);
 
 
+        class MyAdjustmentListener implements AdjustmentListener {
+            public void adjustmentValueChanged(AdjustmentEvent e) {
+                frame.repaint();
+            }
+        }
 
+        hbar.addAdjustmentListener(new MyAdjustmentListener( ));
+        vbar.addAdjustmentListener(new MyAdjustmentListener( ));
 
-
+        frame.getContentPane().add(hbar, BorderLayout.SOUTH);
+        frame.getContentPane().add(vbar, BorderLayout.EAST);
         //Set close operation for JFrame
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);*/
+        JScrollPane tAreaScrollPane = new JScrollPane(jp);
+        //tAreaScrollPane.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        tAreaScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        frame.add(tAreaScrollPane);
         //Set JFrame size
-        //frame.setSize(10000, 40000);
+        //frame.setSize(500, 1000);
         //to enable full screen
         frame.setExtendedState(frame.MAXIMIZED_BOTH);
         //frame.setUndecorated(true);
@@ -271,7 +293,6 @@ public class Main
 
         //So, if you want to add other component like JTextArea, just add them into JPanel.After that add
         //the JPanel into JScrollPane before add the JScrollPane into JFrame.
-
 
 
 
@@ -300,7 +321,8 @@ public class Main
 
         //PreOrderTraverse(root,frame,xlevel,ylevel,0,true);
         //justTraverse(root,frame,xlevel,ylevel,-1,300);
-        drawTree(root,frame,xlevel,ylevel,-1,300);
+        drawTree(root,frame,xlevel,ylevel,-1,310);
+
         System.out.println("done ");
     }
 
