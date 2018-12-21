@@ -8,19 +8,18 @@ public class Scanner
     static String data ;
     static int location = 0 ;
     enum State{START,INCOMMENT,INNUM,INID,INASSIGN,DONE};
-
-    /*
-        public Scanner(String data)
-        {
-            this.data=data;
-        }
-    */
-
+/*
+    public Scanner(String data)
+    {
+        this.data=data;
+    }
+*/
     public  void execute () throws Exception {
         // create the empty list of tokens
         List<Token_Type> List_of_Tokens = new ArrayList<Token_Type>();
 
         // read the program from file and remove the newlines
+
         // over here you need to put the file path to read from
 
         data = readFileAsString("program.txt");
@@ -34,8 +33,9 @@ public class Scanner
         }
 
         // print the token list to file
+        //System.out.println(data);
         Token_Type.Print_List_Token_Type(List_of_Tokens );
-        System.out.println("done ");
+        System.out.println("output file is created ");
     }
     public static String readFileAsString(String fileName)throws Exception
     {
@@ -43,7 +43,6 @@ public class Scanner
         data = new String(Files.readAllBytes(Paths.get(fileName)));
         return data;
     }
-
     private static Boolean isSymbol(char c)
     {
         switch(c)
@@ -63,7 +62,6 @@ public class Scanner
                 return false;
         }
     }
-
     private static Boolean isReserved(String s)
     {
         switch (s)
@@ -81,7 +79,6 @@ public class Scanner
                 return false;
         }
     }
-
     private  static  void Start(  List<Token_Type> List_of_Tokens    )
     {
         char ch;
@@ -91,6 +88,21 @@ public class Scanner
         {
             if(location<data.length())
                 ch=data.charAt(location);
+            else if(location==data.length()&&token!="")
+            {
+                if(currentState==State.INID)
+                {
+                    if(isReserved(token))
+                        List_of_Tokens.add(new Token_Type("Reserved Word",token));
+                    else
+                        List_of_Tokens.add(new Token_Type("identifier",token));
+                }
+                else if(currentState==State.INNUM)
+                {
+                    List_of_Tokens.add(new Token_Type("number",token));
+                }
+                break;
+            }
             else
                 break;
             switch (currentState)
@@ -147,6 +159,14 @@ public class Scanner
                     {
                         currentState=State.INID;
                         token+=String.valueOf(ch);
+                        /*
+                        if(location==data.length()-1)
+                        {
+                            if(isReserved(token))
+                                List_of_Tokens.add(new Token_Type("Reserved Word",token));
+                            else
+                                List_of_Tokens.add(new Token_Type("identifier",token));
+                        }*/
                     }
                     else
                     {
@@ -179,9 +199,25 @@ public class Scanner
 
         return ;
     }
+    private  static  void InNum( char id ,  List<Token_Type> List_of_Tokens  )
+    {
+        return ;
+    }
+    private  static  void InId( char num , List<Token_Type> List_of_Tokens )
 
+    {
+        return ;
+    }
+    private  static  void InAssign(  char symbol   , List<Token_Type> List_of_Tokens  )
+    {
+            return ;
 
-
-
+    }
+    private  static  void SpecialSymbols( char symbol   , List<Token_Type> List_of_Tokens  )
+    {
+        // Token_Type temp = new Token_Type( "" ,":=" );
+        // List_of_Tokens.add(temp);
+        return ;
+    }
 
 }

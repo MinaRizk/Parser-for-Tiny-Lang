@@ -144,7 +144,7 @@ end stmt_sequence
      * */
     TreeNode  stmt_sequence()
     {
-        TreeNode tree = new TreeNode();
+        TreeNode tree = new TreeNode("H");
       //LinkedList<TreeNode> children = new LinkedList<TreeNode>();
       //children.addLast(stmt());
         tree.setChild(stmt());
@@ -214,7 +214,7 @@ end stmt
         if (token.equals("else"))
             {
                 match("else");
-                elseChildtree = stmt();
+                elseChildtree = stmt_sequence();
                 tree.setChild(elseChildtree);
             }
         match("end");
@@ -330,24 +330,33 @@ end stmt
     {
         TreeNode tree = new TreeNode();
         TreeNode termtree =new TreeNode();
-        termtree=term();
-        tree.setChild(termtree);
+        tree=term();
+
         while (add_op())
         {
+            termtree=new TreeNode();
+
             if(token.equals("+"))
             {
                 match("+");
-                tree.setName("op \n (+)");
+                termtree.setName("op \n (+)");
             }
             else
             {
                 match("-");
-                tree.setName("op \n (-)");
+                termtree.setName("op \n (-)");
             }
-            termtree=term();
-            tree.setChild(termtree);
+            termtree.setChild(tree);
+            tree=term();
+            termtree.setChild(tree);
+            tree=termtree;
         }
-        return tree;
+        if(tree.getName().equals("null"))
+        {
+            return tree.getChildren().getFirst();
+        }
+        else
+            return tree;
     }
 
     /*
@@ -361,6 +370,38 @@ factor ;
 end while ;
 end term ;
      * */
+    TreeNode term()
+    {
+        TreeNode tree = new TreeNode();
+        TreeNode factortree =new TreeNode();
+        tree=factor();
+        //factortree.setChild(tree);
+        while (mul_op())
+        {
+            factortree=new TreeNode();
+            if(token.equals("*"))
+            {
+                match("*");
+                factortree.setName("op \n (*)");
+            }
+            else
+            {
+                match("/");
+                factortree.setName("op \n (/)");
+            }
+            factortree.setChild(tree);
+            tree=factor();
+            factortree.setChild(tree);
+            tree=factortree;
+        }
+        if(tree.getName().equals("null"))
+        {
+            return tree.getChildren().getFirst();
+        }
+        else
+            return tree;
+    }
+    /*
     TreeNode term()
     {
         TreeNode tree = new TreeNode();
@@ -382,8 +423,14 @@ end term ;
             factortree=factor();
             tree.setChild(factortree);
         }
-        return tree;
+        if(tree.getName().equals("null"))
+        {
+            return tree.getChildren().getFirst();
+        }
+        else
+            return tree;
     }
+    */
 
     /*
      *
@@ -403,12 +450,24 @@ end term ;
                 match("number");
                 tree.setName("const \n ("+ syntaxx+") ");
                 break;
+            /*
+            case "Symbol":
+                match("Symbol");
+                match("number");
+                tree.setName("const \n ("+ syntaxx+") ");
+                break;
+            */
             default:
                 match("identifier");
                 tree.setName("id \n (" + syntaxx+") ");
                 break;
         }
-        return tree;
+        if(tree.getName().equals("null"))
+        {
+            return tree.getChildren().getFirst();
+        }
+        else
+            return tree;
     }
 
     /*

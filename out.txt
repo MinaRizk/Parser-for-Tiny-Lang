@@ -1,0 +1,69 @@
+x,identifier
+:=,assign
+2,number
+;,Symbol
+y,identifier
+:=,assign
+3,number
+;,Symbol
+z,identifier
+:=,assign
+5,number
+;,Symbol
+a,identifier
+:=,assign
+x,identifier
++,Symbol
+y,identifier
++,Symbol
+z,identifier
+;,Symbol
+if,Reserved Word
+z,identifier
+<,Symbol
+8,number
+then,Reserved Word
+repeat,Reserved Word
+a,identifier
+:=,assign
+a,identifier
+*,Symbol
+2,number
+;,Symbol
+z,identifier
+:=,assign
+z,identifier
+-,Symbol
+1,number
+until,Reserved Word
+z,identifier
+=,Symbol
+0,number
+;,Symbol
+write,Reserved Word
+a,identifier
+else,Reserved Word
+read,Reserved Word
+b,identifier
+;,Symbol
+if,Reserved Word
+b,identifier
+=,Symbol
+1,number
+then,Reserved Word
+write,Reserved Word
+b,identifier
+*,Symbol
+(,Symbol
+x,identifier
+-,Symbol
+y,identifier
+),Symbol
+else,Reserved Word
+write,Reserved Word
+a,identifier
+end,Reserved Word
+end,Reserved Word
+;,Symbol
+write,Reserved Word
+z,identifier

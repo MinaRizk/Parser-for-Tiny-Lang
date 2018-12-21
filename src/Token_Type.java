@@ -11,8 +11,8 @@ public class Token_Type
 
     public  Token_Type
             ( String Type_x , String Type_Equivalent_x
-              //, int Type_Equivalent_value_x
-            )
+            //, int Type_Equivalent_value_x
+    )
     {
         Type = Type_x;
         Type_Equivalent = Type_Equivalent_x;
@@ -29,8 +29,7 @@ public class Token_Type
         FileWriter fw = new FileWriter(newTextFile);
 
 
-        while (itr.hasNext())
-        {
+        do {
             //  moving cursor to next element
             Token_Type i = (Token_Type) itr.next();
 
@@ -42,6 +41,7 @@ public class Token_Type
             String str =  i.Type_Equivalent + ','+i.Type  + "\n";
             fw.write(str);
         }
+        while (itr.hasNext());
 
         fw.close();
         return ;
